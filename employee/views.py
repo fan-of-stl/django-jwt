@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.db import transaction
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.exceptions import AuthenticationFailed
 
 
 # Create your views here.
@@ -63,7 +66,20 @@ def error_page(request):
 def profile(request, user_id):
     template_name = ''
     context = {}
+
+    # Check for JWT token
     try:
+        jwt_auth = JWTAuthentication()
+        header_token = request.COOKIES.get('access_token')  # Get the token from the cookie
+        if not header_token:
+            raise AuthenticationFailed("Token not found!")
+
+        validated_token = jwt_auth.get_validated_token(header_token)
+        user = jwt_auth.get_user(validated_token)
+
+        if user.id != user_id:
+            raise AuthenticationFailed("Unauthorized access!")
+
         employee = Employee.objects.get(user_id=user_id)
         context = {"employee": employee}
         template_name = 'employee/profile.html'
@@ -73,7 +89,11 @@ def profile(request, user_id):
     except Employee.DoesNotExist:
         template_name = 'employee/error.html'
         context = {'error_message': 'Employee not found!'}
-        
+        return render(request, template_name, context)
+    
+    except AuthenticationFailed as e:
+        template_name = 'employee/error.html'
+        context = {'error_message': str(e)}
         return render(request, template_name, context)
 
         
@@ -88,8 +108,15 @@ def login_view(request):
         if user is not None:
             login(request, user)
             
+            # Generate JWT token
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+
             try:
-                return redirect('profile', user_id=user.id)
+                response = redirect('profile', user_id=user.id)
+                # Add the token to the response, typically in a cookie or header
+                response.set_cookie('access_token', access_token, httponly=True)
+                return response
             
             except Employee.DoesNotExist:
                 messages.error(request, 'Employee profile not found.')
@@ -114,7 +141,6 @@ def company_registration(request):
             messages.error(request, 'All fields are required!')
         else:
             try:
-                # Create and save the new company
                 Company.objects.create(
                     id=company_id,
                     company_name=company_name,
