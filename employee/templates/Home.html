@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Employee Management System</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'registration' %}">Employee Registration</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'company_registration' %}">Company Registration</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to the Employee Management System</h1>
+        <p class="lead">Our platform helps companies manage employee profiles, registrations, and other organizational tasks efficiently.</p>
+        <hr class="my-4">
+        <p>Using our platform, you can:</p>
+        <ul>
+            <li>Register employees with necessary details like name, designation, and company information.</li>
+            <li>Log in to access personalized employee profiles.</li>
+            <li>Register companies and manage company-specific information such as building name, floor, and parking details.</li>
+        </ul>
+        <a class="btn btn-primary btn-lg mt-4" href="{% url 'registration' %}" role="button">Register an Employee</a>
+        <a class="btn btn-secondary btn-lg mt-4" href="{% url 'company_registration' %}" role="button">Register a Company</a>
+        <a class="btn btn-success btn-lg mt-4" href="{% url 'login' %}" role="button">Login to Your Account</a>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

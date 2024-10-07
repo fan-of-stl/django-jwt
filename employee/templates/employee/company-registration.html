@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center">Company Registration</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="company_id">Company ID:</label>
+            <input type="number" class="form-control" id="company_id" name="company_id" required>
+        </div>
+
+        <div class="form-group">
+            <label for="company_name">Company Name:</label>
+            <input type="text" class="form-control" id="company_name" name="company_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="company_building_name">Company Building Name:</label>
+            <input type="text" class="form-control" id="company_building_name" name="company_building_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="company_floor">Company Floor:</label>
+            <input type="number" class="form-control" id="company_floor" name="company_floor" required min="0">
+        </div>
+
+        <div class="form-group">
+            <label for="company_parking_place_number">Company Parking Place Number:</label>
+            <input type="number" class="form-control" id="company_parking_place_number" name="company_parking_place_number" required min="0">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register Company</button>
+        <a class="btn btn-primary " href="{% url 'registration' %}" role="button">Register an Employee</a>
+        <a class="btn btn-success " href="{% url 'login' %}" role="button">Login to Your Account</a>
+    </form>
+
+    <div class="mt-5">
+        <h4>Registered Companies:</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Company Name</th>
+                    <th>Building Name</th>
+                    <th>Floor</th>
+                    <th>Parking Place</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in companies %}
+                <tr>
+                    <td>{{ company.id }}</td>
+                    <td>{{ company.company_name }}</td>
+                    <td>{{ company.company_building_name }}</td>
+                    <td>{{ company.company_floor }}</td>
+                    <td>{{ company.company_parking_place_number }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No companies registered yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .profile-header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .profile-details {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="profile-header text-center">
+        <h2>Employee Profile</h2>
+    </div>
+
+    <!-- Employee Details Section -->
+    <div class="profile-details">
+        <h3 class="section-title">Employee Information</h3>
+        <p><strong>Name:</strong> {{ employee.employee_name }}</p>
+        <p><strong>Designation:</strong> {{ employee.designation }}</p>
+        <p><strong>Company:</strong> {{ employee.company_id.company_name }}</p>
+    </div>
+
+    <!-- Parking Details Section -->
+    <div class="profile-details">
+        <h3 class="section-title">Parking Details</h3>
+        <p><strong>Parking Place Number:</strong> {{ employee.company_id.company_parking_place_number }}</p>
+    </div>
+
+    <!-- Floor & Building Details Section -->
+    <div class="profile-details">
+        <h3 class="section-title">Location Details</h3>
+        <p><strong>Building Name:</strong> {{ employee.company_id.company_building_name }}</p>
+        <p><strong>Floor Number:</strong> {{ employee.company_id.company_floor }}</p>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
